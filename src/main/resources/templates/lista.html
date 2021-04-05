@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Hito T2 AD - Guillermo Casas</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+	<style>
+		#titulo{
+			margin-top: 30px;
+			margin-bottom: 40px;
+		}
+		table{
+			width: 100%;
+			text-align: center;
+			/*border:1px solid black;*/
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<h1 id="titulo">Personas en FireBase</h1>
+		<table class="table">
+			<thead class="thead-dark">
+				<tr>
+					<th scope="col">ID</th>
+					<th scope="col">Nombre</th>
+					<th scope="col">Ciudad</th>
+					<th scope="col">Fecha</th>
+					<th scope="col">Mascotas</th>
+					<th scope="col"></th>
+					<th scope="col"></th>
+					<th scope="col"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="persona : ${lista}">
+					<td th:text="${persona.id}"></td>
+					<td th:text="${persona.nombre}"></td>
+					<td th:text="${persona.ciudad}"></td>
+					<td th:text="${#dates.format(persona.dob,'dd-MM-yyyy')}"></td>
+					<td>
+						<div th:each="mascota : ${persona.mascotas}">
+							<spam th:text="${mascota.nombre} +' (' + ${mascota.animal} +')'"></spam>
+							<a th:href="@{/vistas/eliminarmascota(id=${mascota.id})}">
+								<button type="button" class="close" aria-label="Close">
+	  								<span aria-hidden="true">&times;</span>
+								</button>
+							</a>
+						</div>
+					</td>
+					<td>
+						<a th:href="@{/vistas/eliminar(id=${persona.id})}">
+							<button type="button" class="btn btn-danger">Eliminar</button>
+						</a>
+					</td>
+					<td>
+						<a th:href="@{/vistas/actualizar(id=${persona.id})}">
+							<button type="button" class="btn btn-warning">Modificar</button>
+						</a>
+					</td>
+					<td>
+						<a th:href="@{/vistas/nuevomascota(id=${persona.id})}">
+							<button type="button" class="btn btn-success">+ Mascota</button>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<a th:href="@{/vistas/nuevo}"><button type="button" class="btn btn-primary">Nuevo</button></a>
+		<p style="text-align: right;"><a th:href="@{/vistas}"><button type="button" class="btn btn-light">Recargar</button></a></p>
+	</div>
+</body>
+</html>
